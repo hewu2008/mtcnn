@@ -2,16 +2,19 @@
 
 import unittest
 
+from prepare_data import gen_12net_data
+
 
 class MyTest(unittest.TestCase):
     def setUp(self):
-        print('222222')
+        pass
 
-    def tearDown(selfs):
-        print('1111')
+    def tearDown(self):
+        pass
 
     def test_a_run(self):
-        self.assertEqual(1, 1)
+        gen_12net_data.check_data_path()
+        gen_12net_data.read_annotation_file()
 
     def test_b_run(self):
         self.assertEqual(2, 2)

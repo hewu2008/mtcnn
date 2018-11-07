@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 import os
 import random
 import sys
@@ -17,21 +17,21 @@ def _add_to_tfrecord(filename, image_example, tfrecord_writer):
       name: Image name to add to the TFRecord;
       tfrecord_writer: The TFRecord writer to use for writing.
     """
-    #print('---', filename)
-    #imaga_data:array to string
-    #height:original image's height
-    #width:original image's width
-    #image_example dict contains image's info
+    # print('---', filename)
+    # imaga_data:array to string
+    # height:original image's height
+    # width:original image's width
+    # image_example dict contains image's info
     image_data, height, width = _process_image_withoutcoder(filename)
     example = _convert_to_example_simple(image_example, image_data)
     tfrecord_writer.write(example.SerializeToString())
 
 
 def _get_output_filename(output_dir, name, net):
-    #st = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    #return '%s/%s_%s_%s.tfrecord' % (output_dir, name, net, st)
+    # st = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    # return '%s/%s_%s_%s.tfrecord' % (output_dir, name, net, st)
     return '%s/train_PNet_landmark.tfrecord' % (output_dir)
-    
+
 
 def run(dataset_dir, net, output_dir, name='MTCNN', shuffling=False):
     """Runs the conversion operation.
@@ -40,8 +40,8 @@ def run(dataset_dir, net, output_dir, name='MTCNN', shuffling=False):
       dataset_dir: The dataset directory where the dataset is stored.
       output_dir: Output directory.
     """
-    
-    #tfrecord name 
+
+    # tfrecord name
     tf_filename = _get_output_filename(output_dir, name, net)
     if tf.gfile.Exists(tf_filename):
         print('Dataset files already exist. Exiting without re-creating them.')
@@ -51,16 +51,16 @@ def run(dataset_dir, net, output_dir, name='MTCNN', shuffling=False):
     # filenames = dataset['filename']
     if shuffling:
         tf_filename = tf_filename + '_shuffle'
-        #random.seed(12345454)
+        # random.seed(12345454)
         random.shuffle(dataset)
     # Process dataset files.
     # write the data to tfrecord
     print('lala')
     with tf.python_io.TFRecordWriter(tf_filename) as tfrecord_writer:
         for i, image_example in enumerate(dataset):
-            if (i+1) % 100 == 0:
-                sys.stdout.write('\r>> %d/%d images has been converted' % (i+1, len(dataset)))
-                #sys.stdout.write('\r>> Converting image %d/%d' % (i + 1, len(dataset)))
+            if (i + 1) % 100 == 0:
+                sys.stdout.write('\r>> %d/%d images has been converted' % (i + 1, len(dataset)))
+                # sys.stdout.write('\r>> Converting image %d/%d' % (i + 1, len(dataset)))
             sys.stdout.flush()
             filename = image_example['filename']
             _add_to_tfrecord(filename, image_example, tfrecord_writer)
@@ -71,12 +71,12 @@ def run(dataset_dir, net, output_dir, name='MTCNN', shuffling=False):
 
 
 def get_dataset(dir, net='PNet'):
-    #get file name , label and anotation
-    #item = 'imglists/PNet/train_%s_raw.txt' % net
+    # get file name , label and anotation
+    # item = 'imglists/PNet/train_%s_raw.txt' % net
     item = 'imglists/PNet/train_%s_landmark.txt' % net
-    
+
     dataset_dir = os.path.join(dir, item)
-    #print(dataset_dir)
+    # print(dataset_dir)
     imagelist = open(dataset_dir, 'r')
 
     dataset = []
@@ -85,7 +85,7 @@ def get_dataset(dir, net='PNet'):
         data_example = dict()
         bbox = dict()
         data_example['filename'] = info[0]
-        #print(data_example['filename'])
+        # print(data_example['filename'])
         data_example['label'] = int(info[1])
         bbox['xmin'] = 0
         bbox['ymin'] = 0
@@ -100,7 +100,7 @@ def get_dataset(dir, net='PNet'):
         bbox['xleftmouth'] = 0
         bbox['yleftmouth'] = 0
         bbox['xrightmouth'] = 0
-        bbox['yrightmouth'] = 0        
+        bbox['yrightmouth'] = 0
         if len(info) == 6:
             bbox['xmin'] = float(info[2])
             bbox['ymin'] = float(info[3])
@@ -117,7 +117,7 @@ def get_dataset(dir, net='PNet'):
             bbox['yleftmouth'] = float(info[9])
             bbox['xrightmouth'] = float(info[10])
             bbox['yrightmouth'] = float(info[11])
-            
+
         data_example['bbox'] = bbox
         dataset.append(data_example)
 
