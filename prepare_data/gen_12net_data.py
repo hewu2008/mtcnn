@@ -14,10 +14,10 @@ LOGGER.setLevel(logging.DEBUG)
 LOGGER.addHandler(console_handler)
 
 WIDER_DIR = "/opt/data/wider"
-ANNOTATION_FILE = os.path.join(WIDER_DIR, "wider_face_split/wider_face_train_bbx_gt.txt")
-IMAGE_DIR = os.path.join(WIDER_DIR, "WIDER_train/images")
+ANNOTATION_FILE = os.path.join(WIDER_DIR, "raw/wider_face_train_bbx_gt.txt")
+IMAGE_DIR = os.path.join(WIDER_DIR, "raw/WIDER_train/images")
 
-SAVE_DIR = os.path.join(WIDER_DIR, "save")
+SAVE_DIR = os.path.join(WIDER_DIR, "train")
 pos_save_dir = os.path.join(SAVE_DIR, "positive")
 part_save_dir = os.path.join(SAVE_DIR, "part")
 neg_save_dir = os.path.join(SAVE_DIR, "negative")

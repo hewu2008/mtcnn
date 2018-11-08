@@ -174,9 +174,9 @@ def generate_data(ftxt, data_path, net, argument=False):
 
 
 if __name__ == '__main__':
-    dstdir = "/opt/data/wider/train_PNet_landmark_aug"
-    OUTPUT = '/opt/data/wider/'
-    data_path = '/opt/data/wider/landmark'
+    dstdir = "/opt/data/wider/train/landmark"  # image save dir
+    OUTPUT = '/opt/data/wider/train/'
+    data_path = '/opt/data/wider/raw'
     if not exists(OUTPUT):
         os.mkdir(OUTPUT)
     if not exists(dstdir):

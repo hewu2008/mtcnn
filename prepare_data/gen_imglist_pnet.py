@@ -3,7 +3,7 @@ import numpy.random as npr
 import os
 
 data_dir = '../../DATA'
-#anno_file = os.path.join(data_dir, "anno.txt")
+# anno_file = os.path.join(data_dir, "anno.txt")
 
 size = 12
 
@@ -23,23 +23,23 @@ with open(os.path.join(data_dir, '%s/neg_%s.txt' % (size, size)), 'r') as f:
 with open(os.path.join(data_dir, '%s/part_%s.txt' % (size, size)), 'r') as f:
     part = f.readlines()
 
-with open(os.path.join(data_dir,'%s/landmark_%s_aug.txt' %(size,size)), 'r') as f:
+with open(os.path.join(data_dir, '%s/landmark_%s_aug.txt' % (size, size)), 'r') as f:
     landmark = f.readlines()
-    
+
 dir_path = os.path.join(data_dir, 'imglists')
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
-if not os.path.exists(os.path.join(dir_path, "%s" %(net))):
-    os.makedirs(os.path.join(dir_path, "%s" %(net)))
-with open(os.path.join(dir_path, "%s" %(net),"train_%s_landmark.txt" % (net)), "w") as f:
+if not os.path.exists(os.path.join(dir_path, "%s" % (net))):
+    os.makedirs(os.path.join(dir_path, "%s" % (net)))
+with open(os.path.join(dir_path, "%s" % (net), "train_%s_landmark.txt" % (net)), "w") as f:
     nums = [len(neg), len(pos), len(part)]
     ratio = [3, 1, 1]
-    #base_num = min(nums)
+    # base_num = min(nums)e
     base_num = 250000
     print(len(neg), len(pos), len(part), base_num)
 
-    #shuffle the order of the initial data
-    #if negative examples are more than 750k then only choose 750k
+    # shuffle the order of the initial data
+    # if negative examples are more than 750k then only choose 750k
     if len(neg) > base_num * 3:
         neg_keep = npr.choice(len(neg), size=base_num * 3, replace=True)
     else:
