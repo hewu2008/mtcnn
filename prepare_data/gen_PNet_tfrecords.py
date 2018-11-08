@@ -55,7 +55,6 @@ def run(dataset_dir, net, output_dir, name='MTCNN', shuffling=False):
         random.shuffle(dataset)
     # Process dataset files.
     # write the data to tfrecord
-    print('lala')
     with tf.python_io.TFRecordWriter(tf_filename) as tfrecord_writer:
         for i, image_example in enumerate(dataset):
             if (i + 1) % 100 == 0:
@@ -63,7 +62,8 @@ def run(dataset_dir, net, output_dir, name='MTCNN', shuffling=False):
                 # sys.stdout.write('\r>> Converting image %d/%d' % (i + 1, len(dataset)))
             sys.stdout.flush()
             filename = image_example['filename']
-            _add_to_tfrecord(filename, image_example, tfrecord_writer)
+            print("add_to_tfrecord = %s" % filename)
+            _add_to_tfrecord(os.path.join(dataset_dir, filename), image_example, tfrecord_writer)
     # Finally, write the labels file:
     # labels_to_class_names = dict(zip(range(len(_CLASS_NAMES)), _CLASS_NAMES))
     # dataset_utils.write_label_file(labels_to_class_names, dataset_dir)
@@ -86,7 +86,10 @@ def get_dataset(dir, net='PNet'):
         bbox = dict()
         data_example['filename'] = info[0]
         # print(data_example['filename'])
-        data_example['label'] = int(info[1])
+        if len(info) == 1:
+            data_example['label'] = 0  # negative
+        else:
+            data_example['label'] = int(info[1])
         bbox['xmin'] = 0
         bbox['ymin'] = 0
         bbox['xmax'] = 0
@@ -125,7 +128,7 @@ def get_dataset(dir, net='PNet'):
 
 
 if __name__ == '__main__':
-    dir = '../../DATA/'
+    dir = '/opt/data/wider/train'
     net = 'PNet'
-    output_directory = '../../DATA/imglists/PNet'
+    output_directory = '/opt/data/wider/train/imglists/PNet'
     run(dir, net, output_directory, shuffling=True)

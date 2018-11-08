@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 import tensorflow as tf
 import os
 import cv2
@@ -62,6 +62,8 @@ def _convert_to_example(image_example, image_buffer, colorspace=b'RGB', channels
         'image/image_bbox/ymax': _float_feature(ymax),
     }))
     return example
+
+
 def _convert_to_example_simple(image_example, image_buffer):
     """
     covert to tfrecord file
@@ -78,11 +80,10 @@ def _convert_to_example_simple(image_example, image_buffer):
     # class label for the whole image
     class_label = image_example['label']
     bbox = image_example['bbox']
-    roi = [bbox['xmin'],bbox['ymin'],bbox['xmax'],bbox['ymax']]
-    landmark = [bbox['xlefteye'],bbox['ylefteye'],bbox['xrighteye'],bbox['yrighteye'],bbox['xnose'],bbox['ynose'],
-                bbox['xleftmouth'],bbox['yleftmouth'],bbox['xrightmouth'],bbox['yrightmouth']]
-                
-      
+    roi = [bbox['xmin'], bbox['ymin'], bbox['xmax'], bbox['ymax']]
+    landmark = [bbox['xlefteye'], bbox['ylefteye'], bbox['xrighteye'], bbox['yrighteye'], bbox['xnose'], bbox['ynose'],
+                bbox['xleftmouth'], bbox['yleftmouth'], bbox['xrightmouth'], bbox['yrightmouth']]
+
     example = tf.train.Example(features=tf.train.Features(feature={
         'image/encoded': _bytes_feature(image_buffer),
         'image/label': _int64_feature(class_label),
@@ -92,9 +93,9 @@ def _convert_to_example_simple(image_example, image_buffer):
     return example
 
 
-
 class ImageCoder(object):
     """Helper class that provides TensorFlow image coding utilities."""
+
     def __init__(self):
         # Create a single Session to run all image coding calls.
         self._sess = tf.Session()
@@ -175,10 +176,12 @@ def _process_image(filename, coder):
     assert image.shape[2] == 3
 
     return image_data, height, width
+
+
 def _process_image_withoutcoder(filename):
-    #print(filename)
+    # print(filename)
     image = cv2.imread(filename)
-    #print(type(image))
+    # print(type(image))
     # transform data into string format
     image_data = image.tostring()
     assert len(image.shape) == 3
@@ -187,6 +190,3 @@ def _process_image_withoutcoder(filename):
     assert image.shape[2] == 3
     # return string data and initial height and width of the image
     return image_data, height, width
-
-
-
