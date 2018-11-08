@@ -12,8 +12,8 @@ from prepare_data.Landmark_utils import rotate, flip
 from prepare_data.utils import IoU
 
 
-def GenerateData(ftxt, data_path, net, argument=False):
-    '''
+def generate_data(ftxt, data_path, net, argument=False):
+    """
 
     :param ftxt: name/path of the text file that contains image path,
                 bounding box, and landmarks
@@ -22,7 +22,7 @@ def GenerateData(ftxt, data_path, net, argument=False):
     :param net: one of the net in the cascaded networks
     :param argument: apply augmentation or not
     :return:  images and related landmarks
-    '''
+    """
     if net == "PNet":
         size = 12
     elif net == "RNet":
@@ -174,9 +174,9 @@ def GenerateData(ftxt, data_path, net, argument=False):
 
 
 if __name__ == '__main__':
-    dstdir = "../../DATA/12/train_PNet_landmark_aug"
-    OUTPUT = '../../DATA/12'
-    data_path = '../../DATA'
+    dstdir = "/opt/data/wider/train_PNet_landmark_aug"
+    OUTPUT = '/opt/data/wider/'
+    data_path = '/opt/data/wider/landmark'
     if not exists(OUTPUT):
         os.mkdir(OUTPUT)
     if not exists(dstdir):
@@ -186,4 +186,4 @@ if __name__ == '__main__':
     net = "PNet"
     # the file contains the names of all the landmark training data
     train_txt = "trainImageList.txt"
-    imgs, landmarks = GenerateData(train_txt, data_path, net, argument=True)
+    imgs, landmarks = generate_data(train_txt, data_path, net, argument=True)
