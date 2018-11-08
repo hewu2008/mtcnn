@@ -2,7 +2,7 @@ import numpy as np
 import numpy.random as npr
 import os
 
-data_dir = '../../DATA'
+data_dir = '/opt/data/wider/train/'
 # anno_file = os.path.join(data_dir, "anno.txt")
 
 size = 12
@@ -14,24 +14,24 @@ elif size == 24:
 elif size == 48:
     net = "ONet"
 
-with open(os.path.join(data_dir, '%s/pos_%s.txt' % (size, size)), 'r') as f:
+with open(os.path.join(data_dir, 'pos_%s.txt' % size), 'r') as f:
     pos = f.readlines()
 
-with open(os.path.join(data_dir, '%s/neg_%s.txt' % (size, size)), 'r') as f:
+with open(os.path.join(data_dir, 'neg_%s.txt' % size), 'r') as f:
     neg = f.readlines()
 
-with open(os.path.join(data_dir, '%s/part_%s.txt' % (size, size)), 'r') as f:
+with open(os.path.join(data_dir, 'part_%s.txt' % size), 'r') as f:
     part = f.readlines()
 
-with open(os.path.join(data_dir, '%s/landmark_%s_aug.txt' % (size, size)), 'r') as f:
+with open(os.path.join(data_dir, 'landmark_%s_aug.txt' % size), 'r') as f:
     landmark = f.readlines()
 
 dir_path = os.path.join(data_dir, 'imglists')
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
-if not os.path.exists(os.path.join(dir_path, "%s" % (net))):
-    os.makedirs(os.path.join(dir_path, "%s" % (net)))
-with open(os.path.join(dir_path, "%s" % (net), "train_%s_landmark.txt" % (net)), "w") as f:
+if not os.path.exists(os.path.join(dir_path, "%s" % net)):
+    os.makedirs(os.path.join(dir_path, "%s" % net))
+with open(os.path.join(dir_path, "%s" % net, "train_%s_landmark.txt" % net), "w") as f:
     nums = [len(neg), len(pos), len(part)]
     ratio = [3, 1, 1]
     # base_num = min(nums)e
@@ -50,10 +50,10 @@ with open(os.path.join(dir_path, "%s" % (net), "train_%s_landmark.txt" % (net)),
 
     # write the data according to the shuffled order
     for i in pos_keep:
-        f.write(pos[i])
+        f.write(pos[i][1:])
     for i in neg_keep:
-        f.write(neg[i])
+        f.write(neg[i][1:])
     for i in part_keep:
-        f.write(part[i])
+        f.write(part[i][1:])
     for item in landmark:
-        f.write(item)
+        f.write(item.replace(data_dir, ''))
