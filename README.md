@@ -1,5 +1,6 @@
 ## Description
 This work is used for reproduce MTCNN,a Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks.
+https://blog.csdn.net/qq_14845119/article/details/52680940
 
 ## Prerequisites
 1. You need CUDA-compatible GPUs to train the model.
